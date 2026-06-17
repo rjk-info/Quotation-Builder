@@ -16,7 +16,10 @@ const normalizeDisplay = (display = {}) => {
 
   return {
     ...defaultDisplaySettings,
-    showClientInformation: source.showClientInformation ?? defaultDisplaySettings.showClientInformation
+    showClientInformation: source.showClientInformation ?? defaultDisplaySettings.showClientInformation,
+    dividerColor: source.dividerColor ?? "#0b2343",
+    sectionTitleColor: source.sectionTitleColor ?? "#0f172a",
+    sectionTitleSize: source.sectionTitleSize ?? 11
   };
 };
 
@@ -47,6 +50,8 @@ export const normalizeQuotation = (quotation) => {
   };
   normalized.companyDetails = normalized.companyDetails || [];
   normalized.clientDetails = normalized.clientDetails || [];
+  normalized.companyTitle = normalized.companyTitle ?? "From";
+  normalized.clientTitle = normalized.clientTitle ?? "Client";
   normalized.pricing = {
     columns: normalized.pricing?.columns || [],
     rows: normalized.pricing?.rows || []
@@ -169,8 +174,16 @@ const quotationSlice = createSlice({
     updateDisplaySettings(state, action) {
       const display = ensureDisplay(state.current);
       const nextSettings = { ...action.payload };
-
       state.current.display = { ...display, ...nextSettings };
+      state.current = withTimestamps(state.current);
+    },
+    updateSectionTitles(state, action) {
+      if (action.payload.companyTitle !== undefined) {
+        state.current.companyTitle = action.payload.companyTitle;
+      }
+      if (action.payload.clientTitle !== undefined) {
+        state.current.clientTitle = action.payload.clientTitle;
+      }
       state.current = withTimestamps(state.current);
     },
     addCompanyField(state) {
@@ -394,7 +407,8 @@ export const {
   updatePricingCell,
   updatePricingColumn,
   updateSection,
-  updateWatermark
+  updateWatermark,
+  updateSectionTitles
 } = quotationSlice.actions;
 
 export const selectQuotationState = (state) => state.quotationBuilder;

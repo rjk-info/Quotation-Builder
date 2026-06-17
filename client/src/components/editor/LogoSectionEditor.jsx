@@ -1,10 +1,16 @@
-import { ImagePlus, X } from "lucide-react";
+import { AlignCenter, AlignLeft, AlignRight, ImagePlus, X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentQuotation, updateLogo } from "../../store/quotationSlice.js";
 import { readFileAsDataUrl } from "../../utils/files.js";
 import { Button } from "../ui/Button.jsx";
 import { Field } from "../ui/Field.jsx";
 import { SectionCard } from "../ui/SectionCard.jsx";
+
+const alignOptions = [
+  { value: "left", icon: AlignLeft, label: "Left" },
+  { value: "center", icon: AlignCenter, label: "Center" },
+  { value: "right", icon: AlignRight, label: "Right" }
+];
 
 export const LogoSectionEditor = () => {
   const dispatch = useDispatch();
@@ -25,7 +31,7 @@ export const LogoSectionEditor = () => {
             <>
               <button
                 type="button"
-                className="absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-slate-600 shadow ring-1 ring-slate-200 transition hover:bg-red-50 hover:text-red-700 dark:bg-slate-900/90 dark:text-slate-100 dark:ring-slate-700"
+                className="absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-slate-600 shadow ring-1 ring-slate-200 transition hover:bg-red-50 hover:text-red-700"
                 title="Remove logo"
                 aria-label="Remove logo"
                 onClick={() => dispatch(updateLogo({ src: "" }))}
@@ -35,7 +41,7 @@ export const LogoSectionEditor = () => {
               <img src={logo.src} alt="Company logo" className="max-h-12 object-contain" />
             </>
           ) : (
-            "No logo"
+            <span className="text-sm text-slate-400">No logo</span>
           )}
         </div>
         <Button as="label" variant="secondary" className="relative cursor-pointer">
@@ -55,6 +61,26 @@ export const LogoSectionEditor = () => {
           className="accent-navy-700"
         />
       </Field>
+
+      {/* Alignment buttons */}
+      <div className="grid gap-2">
+        <span className="text-sm font-semibold text-slate-700">Logo Alignment</span>
+        <div className="flex gap-2">
+          {alignOptions.map(({ value, icon: Icon, label }) => (
+            <Button
+              key={value}
+              type="button"
+              variant={logo.align === value ? "primary" : "secondary"}
+              size="icon"
+              title={label}
+              aria-label={label}
+              onClick={() => dispatch(updateLogo({ align: value }))}
+            >
+              <Icon className="h-4 w-4" />
+            </Button>
+          ))}
+        </div>
+      </div>
     </SectionCard>
   );
 };

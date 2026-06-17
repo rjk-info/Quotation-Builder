@@ -14,7 +14,15 @@ export const DetailsEditor = ({
   onShowClientInformationChange,
   addAction,
   updateAction,
-  deleteAction
+  deleteAction,
+  sectionTitleColor,
+  sectionTitleSize,
+  onSectionTitleColorChange,
+  onSectionTitleSizeChange,
+  dividerColor,
+  onDividerColorChange,
+  sectionLabel,
+  onSectionLabelChange
 }) => {
   const dispatch = useDispatch();
 
@@ -30,6 +38,63 @@ export const DetailsEditor = ({
           />
           Show Client Information
         </label>
+      ) : null}
+      {onSectionLabelChange ? (
+        <Field label="Section Title">
+          <input
+            className={inputClass}
+            value={sectionLabel ?? ""}
+            placeholder="e.g. From, Company, Sender..."
+            onChange={(e) => onSectionLabelChange(e.target.value)}
+          />
+        </Field>
+      ) : null}
+
+      {onSectionTitleColorChange ? (
+        <div className="grid gap-3 rounded-md border border-slate-100 bg-slate-50 p-3">
+          <p className="text-xs font-bold uppercase tracking-wide text-slate-500">FROM / CLIENT Title Style</p>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Title Color">
+              <input
+                type="color"
+                className="h-10 w-full rounded-md border border-slate-200 bg-white p-1"
+                value={sectionTitleColor ?? "#0f172a"}
+                onChange={(e) => onSectionTitleColorChange(e.target.value)}
+              />
+            </Field>
+            <Field label="Title Size">
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-200 bg-white text-lg font-bold hover:bg-slate-50"
+                  onClick={() => onSectionTitleSizeChange(Math.max(8, (sectionTitleSize ?? 11) - 1))}
+                >
+                  −
+                </button>
+                <span className="flex h-10 w-12 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold">
+                  {sectionTitleSize ?? 11}
+                </span>
+                <button
+                  type="button"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-200 bg-white text-lg font-bold hover:bg-slate-50"
+                  onClick={() => onSectionTitleSizeChange(Math.min(20, (sectionTitleSize ?? 11) + 1))}
+                >
+                  +
+                </button>
+              </div>
+            </Field>
+          </div>
+          {onDividerColorChange ? (
+            <Field label="Divider Line Color">
+              <input
+                type="color"
+                className="h-10 w-full rounded-md border border-slate-200 bg-white p-1"
+                value={dividerColor ?? "#0b2343"}
+                onChange={(e) => onDividerColorChange(e.target.value)}
+              />
+            </Field>
+          ) : null}
+        </div>
       ) : null}
 
       <div className="grid gap-3">
@@ -65,6 +130,7 @@ export const DetailsEditor = ({
           </div>
         ))}
       </div>
+
       <Button type="button" variant="secondary" onClick={() => dispatch(addAction())}>
         <Plus className="h-4 w-4" />
         Add field

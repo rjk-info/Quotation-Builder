@@ -7,7 +7,8 @@ import {
   selectCurrentQuotation,
   updateDisplaySettings,
   updateClientField,
-  updateCompanyField
+  updateCompanyField,
+  updateSectionTitles
 } from "../../store/quotationSlice.js";
 import { defaultDisplaySettings } from "../../utils/typography.js";
 import { DetailsEditor } from "./DetailsEditor.jsx";
@@ -36,6 +37,14 @@ export const EditorPanel = () => {
         addAction={addCompanyField}
         updateAction={updateCompanyField}
         deleteAction={deleteCompanyField}
+        sectionTitleColor={display.sectionTitleColor}
+        sectionTitleSize={display.sectionTitleSize}
+        onSectionTitleColorChange={(value) => dispatch(updateDisplaySettings({ sectionTitleColor: value }))}
+        onSectionTitleSizeChange={(value) => dispatch(updateDisplaySettings({ sectionTitleSize: value }))}
+        dividerColor={display.dividerColor}
+        onDividerColorChange={(value) => dispatch(updateDisplaySettings({ dividerColor: value }))}
+        sectionLabel={quotation.companyTitle}
+        onSectionLabelChange={(value) => dispatch(updateSectionTitles({ companyTitle: value }))}
       />
       <DetailsEditor
         title="Client Details Section"
@@ -46,6 +55,8 @@ export const EditorPanel = () => {
         addAction={addClientField}
         updateAction={updateClientField}
         deleteAction={deleteClientField}
+        sectionLabel={quotation.clientTitle}
+        onSectionLabelChange={(value) => dispatch(updateSectionTitles({ clientTitle: value }))}
       />
       <PricingTableEditor />
       <DynamicSectionsEditor />

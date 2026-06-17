@@ -10,9 +10,12 @@ const RichHtml = ({ as: Component = "div", className = "", html = "" }) => (
   />
 );
 
-const DetailsList = ({ title, fields }) => (
+const DetailsList = ({ title, fields, titleColor, titleSize }) => (
   <div>
-    <h3 className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-900">
+    <h3
+      className="mb-2 font-bold uppercase tracking-wide"
+      style={{ fontSize: titleSize, color: titleColor }}
+    >
       {title}
     </h3>
     <div className="grid gap-1 text-sm">
@@ -38,6 +41,11 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
   const quotation = useSelector(selectCurrentQuotation);
   const grandTotal = useSelector(selectGrandTotal);
   const showClientInformation = quotation.display?.showClientInformation ?? true;
+  const dividerColor = quotation.display?.dividerColor ?? "#0b2343";
+  const sectionTitleColor = quotation.display?.sectionTitleColor ?? "#0f172a";
+  const sectionTitleSize = quotation.display?.sectionTitleSize ?? 11;
+  const companyTitle = quotation.companyTitle ?? "From";
+  const clientTitle = quotation.clientTitle ?? "Client";
   const logoJustify = {
     left: "flex-start",
     center: "center",
@@ -100,7 +108,7 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
       ) : null}
 
       <div className="relative z-10 rounded-lg border-2 border-slate-500 p-6">
-        <header className="border-b-4 border-navy-900 pb-3">
+        <header className="pb-3" style={{ borderBottom: `4px solid ${dividerColor}` }}>
           <div className="mb-0 flex" style={{ justifyContent: logoJustify }}>
             {quotation.logo.src ? (
               <img
@@ -124,13 +132,12 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
         </header>
 
         <section
-          className={`mt-4 grid grid-cols-1 gap-6 border-b border-slate-200 pb-6 ${
-            showClientInformation ? "md:grid-cols-[0.9fr_1.1fr]" : ""
-          }`}
+          className={`mt-4 grid grid-cols-1 gap-6 border-b border-slate-200 pb-6 ${showClientInformation ? "md:grid-cols-[0.9fr_1.1fr]" : ""
+            }`}
         >
-          <DetailsList title="From" fields={quotation.companyDetails} />
+          <DetailsList title={companyTitle} fields={quotation.companyDetails} titleColor={sectionTitleColor} titleSize={sectionTitleSize} />
           {showClientInformation ? (
-            <DetailsList title="Client" fields={quotation.clientDetails} />
+            <DetailsList title={clientTitle} fields={quotation.clientDetails} titleColor={sectionTitleColor} titleSize={sectionTitleSize} />
           ) : null}
         </section>
 
@@ -158,9 +165,8 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
                 {quotation.pricing.columns.map((column) => (
                   <th
                     key={column.id}
-                    className={`px-3 py-3 text-xs font-bold uppercase tracking-wide ${
-                      column.label?.toLowerCase() === "description" ? "text-left" : "text-center"
-                    }`}
+                    className={`px-3 py-3 text-xs font-bold uppercase tracking-wide ${column.label?.toLowerCase() === "description" ? "text-left" : "text-center"
+                      }`}
                   >
                     {column.label}
                   </th>
@@ -173,9 +179,8 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
                   {quotation.pricing.columns.map((column) => (
                     <td
                       key={column.id}
-                      className={`px-3 py-3 align-middle text-slate-700 ${
-                        column.label?.toLowerCase() === "description" ? "text-left" : "text-center"
-                      }`}
+                      className={`px-3 py-3 align-middle text-slate-700 ${column.label?.toLowerCase() === "description" ? "text-left" : "text-center"
+                        }`}
                     >
                       {column.type === "currency" || column.type === "total" ? (
                         money(row.cells[column.id])

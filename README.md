@@ -1,50 +1,132 @@
-# Quotation Builder
+# 🚀 Quotation Builder
 
-A modular MERN SaaS application for creating professional IT quotations with independent editable blocks, live preview, draft management, auto quotation numbers, templates, and PDF export.
+A modern MERN Stack SaaS application for creating, managing, and exporting professional business quotations. The platform provides a modular drag-and-drop quotation builder with live preview, reusable templates, draft management, automated quotation numbering, and PDF export capabilities.
 
-## Stack
+## 🌐 Live Demo
 
-- React, Vite, Tailwind CSS
-- Redux Toolkit
-- React DnD
-- Node.js, Express.js
-- MongoDB, Mongoose
-- html2pdf.js
+https://steady-kheer-786536.netlify.app/
 
-## Project Structure
+---
+
+## ✨ Key Features
+
+* Interactive two-panel quotation builder
+* Real-time PDF-style live preview
+* Drag-and-drop content management
+* Automatic quotation number generation
+* Draft save, update, duplicate, and delete
+* Multiple pre-built quotation templates
+* PDF export functionality
+* Dynamic pricing table with auto calculations
+* Unlimited custom content sections
+* Responsive and user-friendly interface
+* MongoDB-based quotation storage
+* REST API for quotations and templates
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React.js
+* Vite
+* Tailwind CSS
+* Redux Toolkit
+* React DnD
+
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB
+* Mongoose
+
+### Additional Libraries
+
+* html2pdf.js
+
+---
+
+## 📁 Project Structure
 
 ```text
 quotation-builder/
-  client/      React quotation builder UI
-  server/      Express API, MongoDB schema, routes, templates
+├── client/      React Frontend Application
+├── server/      Express API & Database Layer
+└── README.md
 ```
 
-## Setup
+---
+
+## ⚙️ Installation
 
 ```bash
+git clone https://github.com/rjk-info/Quotation-Builder.git
+
+cd Quotation-Builder
+
 npm install
+
 cp .env.example .env
+
 npm run dev
 ```
 
-The client runs on `http://localhost:5173` and the API runs on `http://localhost:5000`.
+### Local URLs
 
-## Seed Templates
+Frontend:
+
+```text
+http://localhost:5173
+```
+
+Backend:
+
+```text
+http://localhost:5000
+```
+
+---
+
+## 🌱 Seed Default Templates
 
 ```bash
 npm run seed
 ```
 
-The app also ships with local frontend templates, so the builder works immediately even before MongoDB is seeded.
+The application includes built-in quotation templates and can be used immediately, even before MongoDB template seeding.
 
-## Main Features
+---
 
-- Two-panel builder with editor and PDF-style live preview
-- Independent blocks for logo, headings, company details, client details, pricing, rich overview, custom sections, footer, signature, and watermark
-- Spreadsheet-style pricing table with row/column add, delete, edit, drag reorder, auto totals, and grand total
-- Unlimited custom content blocks with edit, duplicate, delete, move up, move down, and drag reorder
-- Default quotation templates for CRM, Shopify, website, digital marketing, and mobile app quotations
-- Local draft save, update, duplicate, delete
-- API endpoints for persistent quotations and templates
-- Structured JSON quotation storage
+## 📋 Available Templates
 
+* CRM Development Quotation
+* Shopify Store Development
+* Business Website Development
+* Digital Marketing Services
+* Mobile App Development
+
+---
+
+## 🎯 Use Cases
+
+* Software Development Agencies
+* Freelancers
+* IT Service Providers
+* Web Development Companies
+* Digital Marketing Agencies
+* Startup Businesses
+
+---
+
+## 👨‍💻 Developer
+
+**Ranjeet Kumar**
+
+MERN Stack Developer | MCA Student
+
+GitHub: https://github.com/rjk-info

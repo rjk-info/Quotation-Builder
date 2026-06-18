@@ -40,9 +40,9 @@ export const getGrandTotal = (pricing) => {
   return pricing.rows.reduce((sum, row) => sum + toNumber(row.cells[totalColumn.id]), 0);
 };
 
-export const createQuotationNumber = (sequence, date = new Date()) => {
-  const year = date.getFullYear();
-  return `CW-${year}-${String(sequence).padStart(3, "0")}`;
+export const createQuotationNumber = (sequence) => {
+  const base = 1000;
+  return String(base + sequence);
 };
 
 export const reorder = (list, from, to) => {

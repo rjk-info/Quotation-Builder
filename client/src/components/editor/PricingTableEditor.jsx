@@ -10,12 +10,13 @@ import {
   reorderPricingColumns,
   reorderPricingRows,
   selectCurrentQuotation,
+  updateDisplaySettings,
   updatePricingCell,
   updatePricingColumn
 } from "../../store/quotationSlice.js";
 import { money } from "../../utils/calculations.js";
 import { Button } from "../ui/Button.jsx";
-import { inputClass } from "../ui/Field.jsx";
+import { Field, inputClass } from "../ui/Field.jsx";
 import { SectionCard } from "../ui/SectionCard.jsx";
 import { RichTextEditor } from "./RichTextEditor.jsx";
 
@@ -110,24 +111,22 @@ const DraggableRow = ({ row, index, columns }) => {
             <div className="rounded-md bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700">
               {money(row.cells[column.id])}
             </div>
+          ) : column.type === "text" ? (
+            <RichTextEditor
+              value={row.cells[column.id] ?? ""}
+              minHeight="min-h-10"
+              placeholder="Cell content"
+              onChange={(value) => dispatch(updatePricingCell({ rowId: row.id, columnId: column.id, value }))}
+            />
           ) : (
-            column.type === "text" ? (
-              <RichTextEditor
-                value={row.cells[column.id] ?? ""}
-                minHeight="min-h-10"
-                placeholder="Cell content"
-                onChange={(value) => dispatch(updatePricingCell({ rowId: row.id, columnId: column.id, value }))}
-              />
-            ) : (
-              <input
-                className={inputClass}
-                type="number"
-                value={row.cells[column.id] ?? ""}
-                onChange={(event) =>
-                  dispatch(updatePricingCell({ rowId: row.id, columnId: column.id, value: event.target.value }))
-                }
-              />
-            )
+            <input
+              className={inputClass}
+              type="number"
+              value={row.cells[column.id] ?? ""}
+              onChange={(event) =>
+                dispatch(updatePricingCell({ rowId: row.id, columnId: column.id, value: event.target.value }))
+              }
+            />
           )}
         </td>
       ))}
@@ -139,9 +138,34 @@ export const PricingTableEditor = () => {
   const dispatch = useDispatch();
   const quotation = useSelector(selectCurrentQuotation);
   const { pricing } = quotation;
+  const display = quotation.display || {};
 
   return (
     <SectionCard title="Dynamic Pricing Table" description="Edit spreadsheet-style rows and columns with automatic totals. Drag handles reorder rows and columns.">
+
+      {/* Table Header Style Controls */}
+      <div className="grid gap-3 rounded-md border border-slate-100 bg-slate-50 p-3">
+        <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Table Header Style</p>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Header Background">
+            <input
+              type="color"
+              className="h-10 w-full rounded-md border border-slate-200 bg-white p-1"
+              value={display.tableHeaderBg ?? "#0b2343"}
+              onChange={(e) => dispatch(updateDisplaySettings({ tableHeaderBg: e.target.value }))}
+            />
+          </Field>
+          <Field label="Header Text Color">
+            <input
+              type="color"
+              className="h-10 w-full rounded-md border border-slate-200 bg-white p-1"
+              value={display.tableHeaderColor ?? "#ffffff"}
+              onChange={(e) => dispatch(updateDisplaySettings({ tableHeaderColor: e.target.value }))}
+            />
+          </Field>
+        </div>
+      </div>
+
       <div className="overflow-x-auto rounded-lg border border-slate-200">
         <table className="min-w-full border-collapse bg-white">
           <thead>

@@ -44,6 +44,8 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
   const dividerColor = quotation.display?.dividerColor ?? "#0b2343";
   const sectionTitleColor = quotation.display?.sectionTitleColor ?? "#0f172a";
   const sectionTitleSize = quotation.display?.sectionTitleSize ?? 11;
+  const tableHeaderBg = quotation.display?.tableHeaderBg ?? "#0b2343";
+  const tableHeaderColor = quotation.display?.tableHeaderColor ?? "#ffffff";
   const companyTitle = quotation.companyTitle ?? "From";
   const clientTitle = quotation.clientTitle ?? "Client";
   const logoJustify = {
@@ -57,7 +59,7 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
       id={id || undefined}
       className="quotation-page relative bg-white"
       style={{
-        fontFamily: fontFamilyStack(defaultFontFamily)
+        fontFamily: fontFamilyStack(quotation.display?.fontFamily ?? defaultFontFamily)
       }}
     >
       {quotation.watermark.enabled ? (
@@ -160,7 +162,7 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
 
         <section className="mt-6 overflow-hidden rounded-lg border border-slate-200">
           <table className="w-full border-collapse text-sm">
-            <thead className="bg-navy-900 text-white">
+            <thead style={{ backgroundColor: tableHeaderBg, color: tableHeaderColor }}>
               <tr>
                 {quotation.pricing.columns.map((column) => (
                   <th

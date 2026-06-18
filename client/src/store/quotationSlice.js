@@ -19,7 +19,9 @@ const normalizeDisplay = (display = {}) => {
     showClientInformation: source.showClientInformation ?? defaultDisplaySettings.showClientInformation,
     dividerColor: source.dividerColor ?? "#0b2343",
     sectionTitleColor: source.sectionTitleColor ?? "#0f172a",
-    sectionTitleSize: source.sectionTitleSize ?? 11
+    sectionTitleSize: source.sectionTitleSize ?? 11,
+    tableHeaderBg: source.tableHeaderBg ?? "#0b2343",
+    tableHeaderColor: source.tableHeaderColor ?? "#ffffff"
   };
 };
 

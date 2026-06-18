@@ -9,6 +9,7 @@ import { QuotationPreview } from "./components/preview/QuotationPreview.jsx";
 import { Button } from "./components/ui/Button.jsx";
 import { createNewQuotation, selectCurrentQuotation, setPreviewOpen } from "./store/quotationSlice.js";
 import { downloadQuotationPdf } from "./utils/pdfExport.js";
+import { GlobalFontSelector } from "./components/editor/GlobalFontSelector.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const App = () => {
 
               <div className="flex min-w-0 flex-1 flex-wrap items-center justify-end gap-2">
                 <TemplateSelector />
+                <GlobalFontSelector />
                 <Button type="button" variant="secondary" onClick={() => dispatch(createNewQuotation())}>
                   <FilePlus2 className="h-4 w-4" />
                   New

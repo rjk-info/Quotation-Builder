@@ -50,6 +50,7 @@ export const normalizeQuotation = (quotation) => {
     subText: "",
     ...(normalized.heading || {})
   };
+  normalized.issueDate = normalized.issueDate ?? new Date().toISOString().split("T")[0];
   normalized.companyDetails = normalized.companyDetails || [];
   normalized.clientDetails = normalized.clientDetails || [];
   normalized.companyTitle = normalized.companyTitle ?? "From";
@@ -317,6 +318,15 @@ const quotationSlice = createSlice({
       state.current.watermark = { ...state.current.watermark, ...action.payload };
       state.current = withTimestamps(state.current);
     },
+    updateQuotationMeta(state, action) {
+      if (action.payload.quotationNumber !== undefined) {
+        state.current.quotationNumber = action.payload.quotationNumber;
+      }
+      if (action.payload.issueDate !== undefined) {
+        state.current.issueDate = action.payload.issueDate;
+      }
+      state.current = withTimestamps(state.current);
+    },
     saveDraft(state) {
       const draft = {
         ...clone(state.current),
@@ -410,6 +420,7 @@ export const {
   updatePricingColumn,
   updateSection,
   updateWatermark,
+  updateQuotationMeta,
   updateSectionTitles
 } = quotationSlice.actions;
 

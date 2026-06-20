@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { selectCurrentQuotation, selectGrandTotal } from "../../store/quotationSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentQuotation, selectGrandTotal, updateQuotationMeta } from "../../store/quotationSlice.js";
 import { money } from "../../utils/calculations.js";
 import { defaultFontFamily, fontFamilyStack } from "../../utils/typography.js";
 
@@ -38,6 +38,7 @@ const DetailsList = ({ title, fields, titleColor, titleSize }) => (
 );
 
 export const QuotationPreview = ({ id = "quotation-preview" }) => {
+  const dispatch = useDispatch();
   const quotation = useSelector(selectCurrentQuotation);
   const grandTotal = useSelector(selectGrandTotal);
   const showClientInformation = quotation.display?.showClientInformation ?? true;
@@ -144,19 +145,23 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
         </section>
 
         <section className="mt-2 flex flex-wrap items-center justify-between gap-3 rounded-md bg-slate-50 px-4 py-2">
-          <div>
+          <div className="flex flex-col items-center">
             <span className="block text-xs font-bold uppercase tracking-wide text-slate-500">Quotation No.</span>
-            <span className="font-bold text-navy-900">{quotation.quotationNumber}</span>
+            <input
+              className="font-bold text-navy-900 bg-transparent border-none outline-none text-center"
+              value={quotation.quotationNumber ?? ""}
+              onChange={(e) => dispatch(updateQuotationMeta({ quotationNumber: e.target.value }))}
+            />
           </div>
-          <div className="text-right">
+          <div className="flex flex-col items-center">
             <span className="block text-xs font-bold uppercase tracking-wide text-slate-500">Issue Date</span>
-            <span className="font-semibold text-slate-700">
-              {new Date(quotation.createdAt).toLocaleDateString("en-IN", {
-                year: "numeric",
-                month: "short",
-                day: "2-digit"
-              })}
-            </span>
+            <input
+              type="date"
+              className="font-semibold text-slate-700 bg-transparent border-none outline-none cursor-pointer text-center"
+              style={{ colorScheme: "light" }}
+              value={quotation.issueDate ?? new Date().toISOString().split("T")[0]}
+              onChange={(e) => dispatch(updateQuotationMeta({ issueDate: e.target.value }))}
+            />
           </div>
         </section>
 

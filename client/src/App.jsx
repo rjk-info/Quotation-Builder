@@ -21,7 +21,8 @@ const App = () => {
     try {
       await downloadQuotationPdf({
         elementId: "quotation-preview-export",
-        fileName: `${quotation.quotationNumber}-${quotation.templateType}.pdf`
+        fileName: `${quotation.quotationNumber}-${quotation.templateType}.pdf`,
+        watermark: quotation.watermark
       });
       setStatus("PDF exported.");
     } catch (error) {

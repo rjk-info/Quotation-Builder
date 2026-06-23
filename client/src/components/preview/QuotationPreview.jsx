@@ -63,7 +63,7 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
         fontFamily: fontFamilyStack(quotation.display?.fontFamily ?? defaultFontFamily)
       }}
     >
-      {quotation.watermark.enabled ? (
+      {/* {quotation.watermark.enabled ? (
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           {quotation.watermark.type === "image" &&
             quotation.watermark.image && (
@@ -108,7 +108,7 @@ export const QuotationPreview = ({ id = "quotation-preview" }) => {
               </div>
             )}
         </div>
-      ) : null}
+      ) : null} */}
 
       <div className="relative z-10 rounded-lg border-2 border-slate-500 p-6">
         <header className="pb-3" style={{ borderBottom: `4px solid ${dividerColor}` }}>

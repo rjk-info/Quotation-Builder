@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { detailField, getTemplateById, templates } from "../data/templates.js";
-import { createQuotationNumber, getGrandTotal, recalculateRow, reorder } from "../utils/calculations.js";
+import { createQuotationNumber, getGrandTotal, recalculateRow, reorder, uuid } from "../utils/calculations.js";
 import { defaultDisplaySettings } from "../utils/typography.js";
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
 const createBlankSection = () => ({
-  id: crypto.randomUUID(),
+  id: uuid(),
   heading: "New Section",
   content: "<p>Add section content here.</p>"
 });
@@ -30,7 +30,7 @@ const normalizeSection = (section = {}) => {
 
   return {
     ...source,
-    id: source.id || crypto.randomUUID(),
+    id: source.id || uuid(),
     heading: source.heading ?? "",
     content: source.content ?? ""
   };
@@ -91,7 +91,7 @@ const ensureDisplay = (quotation) => {
 };
 
 const createEmptyPricingRow = (columns) => ({
-  id: crypto.randomUUID(),
+  id: uuid(),
   cells: columns.reduce((cells, column) => {
     cells[column.id] = column.type === "total" ? 0 : "";
     return cells;
@@ -99,7 +99,7 @@ const createEmptyPricingRow = (columns) => ({
 });
 
 const createColumn = () => ({
-  id: `column_${crypto.randomUUID()}`,
+  id: `column_${uuid()}`,
   label: "New Column",
   type: "text"
 });
@@ -150,7 +150,7 @@ const quotationSlice = createSlice({
     createNewQuotation(state) {
       state.sequence += 1;
       const blank = normalizeQuotation(templates[0]);
-      blank.id = crypto.randomUUID();
+      blank.id = uuid();
       blank.quotationNumber = createQuotationNumber(state.sequence);
       blank.heading.text = "NEW QUOTATION";
       blank.heading.subText = "(Project Name)";
@@ -287,7 +287,7 @@ const quotationSlice = createSlice({
       const index = state.current.sections.findIndex((item) => item.id === action.payload);
       if (index !== -1) {
         const copy = clone(state.current.sections[index]);
-        copy.id = crypto.randomUUID();
+        copy.id = uuid();
         copy.heading = `${copy.heading} Copy`;
         state.current.sections.splice(index + 1, 0, copy);
         state.current = withTimestamps(state.current);
@@ -330,7 +330,7 @@ const quotationSlice = createSlice({
     saveDraft(state) {
       const draft = {
         ...clone(state.current),
-        id: crypto.randomUUID(),
+        id: uuid(),
         draftName: `${state.current.quotationNumber} - ${state.current.templateType}`,
         grandTotal: getGrandTotal(state.current.pricing),
         updatedAt: new Date().toISOString()
@@ -368,7 +368,7 @@ const quotationSlice = createSlice({
       const draft = state.drafts.find((item) => item.id === action.payload);
       if (draft) {
         const copy = clone(draft);
-        copy.id = crypto.randomUUID();
+        copy.id = uuid();
         copy.draftName = `${copy.draftName} Copy`;
         copy.updatedAt = new Date().toISOString();
         state.drafts.unshift(copy);

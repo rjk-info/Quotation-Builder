@@ -43,15 +43,33 @@ select {
 }
 
 .quotation-page {
-  width: min(100%, 210mm);
+  width: 210mm;
+  height: 297mm;
   background: #ffffff;
   color: #1f2937;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+  box-sizing: border-box;
+  position: relative;
+  page-break-after: always;
+  break-after: page;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
 
-  page-break-inside: auto;
-  break-inside: auto;
+@media screen {
+  .quotation-page {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+    margin-bottom: 24px;
+  }
+}
+
+@media print {
+  .quotation-page {
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
 }
 
 .rich-content,
@@ -197,3 +215,18 @@ footer {
     font-weight: 600 !important;
   }
 }
+
+/* PDF export styling overrides to ensure A4 elements fit perfectly with no overflow pages */
+#quotation-preview-export .quotation-page {
+  height: 296.5mm !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+#quotation-preview-export .quotation-page:last-child {
+  page-break-after: avoid !important;
+  break-after: avoid !important;
+}
+

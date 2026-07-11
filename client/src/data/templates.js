@@ -1,3 +1,14 @@
+const uuid = () => {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
+
 const defaultLogo =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(`
@@ -9,7 +20,7 @@ const defaultLogo =
 </svg>`);
 
 export const detailField = (label, value = "") => ({
-  id: crypto.randomUUID(),
+  id: uuid(),
   label,
   value
 });
@@ -22,7 +33,7 @@ export const pricingColumns = [
 ];
 
 export const createPricingRow = (description, quantity, price) => ({
-  id: crypto.randomUUID(),
+  id: uuid(),
   cells: {
     description,
     quantity,
@@ -117,19 +128,19 @@ export const templates = [
     ],
     sections: [
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Features",
         content:
           "<ul><li>Role-based dashboard for administrators and staff</li><li>Lead, client, and appointment management</li><li>Custom reports and exportable operational insights</li><li>Secure authentication and activity tracking</li></ul>"
       },
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Payment Terms",
         content:
           "<ol><li>40% advance to initiate the project</li><li>40% after staging approval</li><li>20% before production handover</li></ol>"
       },
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Project Timeline",
         content: "<p>Estimated timeline is 8 to 10 weeks after requirement freeze and advance payment.</p>"
       }
@@ -149,13 +160,13 @@ export const templates = [
     ],
     sections: [
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Deliverables",
         content:
           "<ul><li>Responsive Shopify storefront</li><li>Home, product, collection, cart, and policy pages</li><li>Payment and shipping setup</li><li>Launch checklist and handover session</li></ul>"
       },
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Terms & Conditions",
         content: "<p>Third-party app, theme, and Shopify subscription charges are billed directly to the client.</p>"
       }
@@ -175,12 +186,12 @@ export const templates = [
     ],
     sections: [
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Scope",
         content: "<p>Up to 8 standard website pages with responsive layouts and content placement.</p>"
       },
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Notes",
         content: "<p>Copywriting, paid plugins, hosting, and domain charges are excluded unless mentioned separately.</p>"
       }
@@ -200,13 +211,13 @@ export const templates = [
     ],
     sections: [
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Monthly Activities",
         content:
           "<ul><li>Content calendar and creative planning</li><li>On-page SEO recommendations</li><li>Campaign monitoring</li><li>Monthly performance report</li></ul>"
       },
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Exclusions",
         content: "<p>Ad spend, influencer fees, and third-party tools are not included in the service fee.</p>"
       }
@@ -226,13 +237,13 @@ export const templates = [
     ],
     sections: [
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "App Modules",
         content:
           "<ul><li>User onboarding and authentication</li><li>Home dashboard and profile management</li><li>Notifications and API-based data sync</li><li>Admin-ready data structure</li></ul>"
       },
       {
-        id: crypto.randomUUID(),
+        id: uuid(),
         heading: "Timeline",
         content: "<p>Estimated delivery is 10 to 14 weeks depending on final module complexity.</p>"
       }
